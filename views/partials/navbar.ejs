@@ -1,0 +1,57 @@
+<nav class="navbar navbar-expand-lg navbar-dark app-navbar sticky-top">
+  <div class="container-fluid px-lg-4">
+
+    <a class="navbar-brand fw-bold" href="/">
+      <i class="fa-solid fa-hospital-user me-2"></i>MediCare <span class="fw-light">HMS</span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="nav">
+      <ul class="navbar-nav me-auto">
+        <% if (currentUser && currentUser.role === 'doctor') { %>
+          <li class="nav-item"><a class="nav-link <%= path.startsWith('/doctor/dashboard') ? 'active' : '' %>" href="/doctor/dashboard"><i class="fa-solid fa-gauge me-1"></i>Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link <%= path.startsWith('/doctor/appointments') ? 'active' : '' %>" href="/doctor/appointments"><i class="fa-regular fa-calendar-check me-1"></i>Appointments</a></li>
+          <li class="nav-item"><a class="nav-link <%= path.startsWith('/doctor/patients') ? 'active' : '' %>" href="/doctor/patients"><i class="fa-solid fa-users me-1"></i>Patients</a></li>
+          <li class="nav-item"><a class="nav-link <%= path.startsWith('/doctor/prescriptions') ? 'active' : '' %>" href="/doctor/prescriptions"><i class="fa-solid fa-file-prescription me-1"></i>Prescriptions</a></li>
+
+        <% } else if (currentUser && currentUser.role === 'receptionist') { %>
+          <li class="nav-item"><a class="nav-link <%= path.startsWith('/reception/dashboard') ? 'active' : '' %>" href="/reception/dashboard"><i class="fa-solid fa-gauge me-1"></i>Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link <%= path.startsWith('/reception/appointments') ? 'active' : '' %>" href="/reception/appointments"><i class="fa-regular fa-calendar-check me-1"></i>Appointments</a></li>
+          <li class="nav-item"><a class="nav-link <%= path.startsWith('/reception/doctors') ? 'active' : '' %>" href="/reception/doctors"><i class="fa-solid fa-user-doctor me-1"></i>Doctors</a></li>
+          <li class="nav-item"><a class="nav-link <%= path.startsWith('/reception/patients') ? 'active' : '' %>" href="/reception/patients"><i class="fa-solid fa-users me-1"></i>Patients</a></li>
+
+        <% } else if (currentUser && currentUser.role === 'patient') { %>
+          <li class="nav-item"><a class="nav-link <%= path.startsWith('/patient/dashboard') ? 'active' : '' %>" href="/patient/dashboard"><i class="fa-solid fa-gauge me-1"></i>Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link <%= path.startsWith('/patient/appointments') ? 'active' : '' %>" href="/patient/appointments"><i class="fa-regular fa-calendar-check me-1"></i>Appointments</a></li>
+          <li class="nav-item"><a class="nav-link <%= path.startsWith('/patient/prescriptions') ? 'active' : '' %>" href="/patient/prescriptions"><i class="fa-solid fa-file-prescription me-1"></i>Prescriptions</a></li>
+          <li class="nav-item"><a class="nav-link <%= path.startsWith('/patient/profile') ? 'active' : '' %>" href="/patient/profile"><i class="fa-regular fa-user me-1"></i>Profile</a></li>
+        <% } %>
+      </ul>
+
+      <ul class="navbar-nav">
+        <% if (currentUser) { %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" data-bs-toggle="dropdown">
+              <span class="avatar me-2"><%= currentUser.name.charAt(0).toUpperCase() %></span>
+              <span>
+                <%= currentUser.name %>
+                <small class="d-block lh-1 opacity-75 text-capitalize"><%= currentUser.role %></small>
+              </span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end shadow">
+              <li><span class="dropdown-item-text small text-muted"><%= currentUser.email %></span></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger" href="/logout"><i class="fa-solid fa-right-from-bracket me-2"></i>Logout</a></li>
+            </ul>
+          </li>
+        <% } else { %>
+          <li class="nav-item"><a class="nav-link" href="/login"><i class="fa-solid fa-right-to-bracket me-1"></i>Login</a></li>
+          <li class="nav-item"><a class="btn btn-light btn-sm ms-lg-2 mt-2 mt-lg-0 fw-semibold" href="/register">Register</a></li>
+        <% } %>
+      </ul>
+    </div>
+  </div>
+</nav>

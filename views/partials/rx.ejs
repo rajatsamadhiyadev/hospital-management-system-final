@@ -1,0 +1,85 @@
+<div class="card border-0 shadow-sm rx-sheet">
+  <div class="card-body p-4 p-lg-5">
+
+    <div class="d-flex justify-content-between align-items-start border-bottom pb-3 mb-4">
+      <div>
+        <h5 class="fw-bold text-primary mb-1"><i class="fa-solid fa-hospital me-2"></i>MediCare Hospital</h5>
+        <small class="text-muted">Digital Prescription</small>
+      </div>
+      <div class="text-end small">
+        <div class="fw-bold">Dr. <%= prescription.doctor.name %></div>
+        <div class="text-muted"><%= prescription.doctor.specialization || 'General Physician' %></div>
+        <div class="text-muted"><%= prescription.doctor.email %></div>
+      </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+      <div class="col-sm-6">
+        <div class="text-muted small text-uppercase fw-semibold">Patient</div>
+        <div class="fw-bold"><%= prescription.patientName %></div>
+        <div class="small text-muted"><%= prescription.patientEmail %></div>
+      </div>
+      <div class="col-sm-6 text-sm-end">
+        <div class="text-muted small text-uppercase fw-semibold">Date</div>
+        <div class="fw-bold"><%= prescription.createdAt.toDateString() %></div>
+        <div class="small text-muted">Rx #<%= prescription._id.toString().slice(-8).toUpperCase() %></div>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <div class="text-muted small text-uppercase fw-semibold mb-1">Diagnosis</div>
+      <div class="p-3 bg-light rounded-3"><%= prescription.diagnosis %></div>
+    </div>
+
+    <div class="mb-4">
+      <div class="d-flex align-items-center mb-2">
+        <span class="rx-symbol me-2">℞</span>
+        <span class="text-muted small text-uppercase fw-semibold">Medicines</span>
+      </div>
+      <% if (!prescription.medicines.length) { %>
+        <p class="text-muted small fst-italic mb-0">No medicines prescribed.</p>
+      <% } else { %>
+        <div class="table-responsive">
+          <table class="table table-sm align-middle mb-0">
+            <thead class="table-light">
+              <tr><th style="width:40px">#</th><th>Medicine</th><th>Dosage</th><th>Frequency</th><th>Duration</th></tr>
+            </thead>
+            <tbody>
+              <% prescription.medicines.forEach((m, i) => { %>
+                <tr>
+                  <td class="text-muted"><%= i + 1 %></td>
+                  <td class="fw-semibold"><%= m.name %></td>
+                  <td class="small"><%= m.dosage || '—' %></td>
+                  <td class="small"><%= m.frequency || '—' %></td>
+                  <td class="small"><%= m.duration || '—' %></td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      <% } %>
+    </div>
+
+    <% if (prescription.advice) { %>
+      <div class="mb-4">
+        <div class="text-muted small text-uppercase fw-semibold mb-1">Advice</div>
+        <div class="p-3 bg-light rounded-3 small"><%= prescription.advice %></div>
+      </div>
+    <% } %>
+
+    <div class="d-flex justify-content-between align-items-end border-top pt-3">
+      <div class="small">
+        <% if (prescription.followUpDate) { %>
+          <span class="badge bg-warning-subtle text-warning">
+            <i class="fa-regular fa-calendar me-1"></i>Follow-up: <%= prescription.followUpDate.toDateString() %>
+          </span>
+        <% } %>
+      </div>
+      <div class="text-center">
+        <div class="signature-line"></div>
+        <small class="text-muted">Dr. <%= prescription.doctor.name %></small>
+      </div>
+    </div>
+
+  </div>
+</div>
