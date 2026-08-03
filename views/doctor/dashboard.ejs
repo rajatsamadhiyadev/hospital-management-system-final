@@ -1,0 +1,70 @@
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+  <div>
+    <h4 class="fw-bold mb-1">Good day, Dr. <%= currentUser.name %> <i class="fa-solid fa-hand-sparkles text-warning ms-1"></i></h4>
+    <p class="text-muted mb-0 small"><%= new Date().toDateString() %></p>
+  </div>
+  <a href="/doctor/prescriptions/new" class="btn btn-primary">
+    <i class="fa-solid fa-file-prescription me-2"></i>Write Prescription
+  </a>
+</div>
+
+<div class="row g-3 mb-4">
+  <%- include('../partials/statCard', { color:'primary', icon:'fa-regular fa-calendar-days', value: stats.todayCount, label:"Today's Appointments" }) %>
+  <%- include('../partials/statCard', { color:'warning', icon:'fa-regular fa-clock',         value: stats.pending,    label:'Pending' }) %>
+  <%- include('../partials/statCard', { color:'success', icon:'fa-solid fa-circle-check',    value: stats.completed,  label:'Completed' }) %>
+  <%- include('../partials/statCard', { color:'info',    icon:'fa-solid fa-file-prescription',value: stats.prescriptionCount, label:'Prescriptions' }) %>
+</div>
+
+<div class="card border-0 shadow-sm">
+  <div class="card-header bg-white border-0 pt-3 d-flex justify-content-between align-items-center">
+    <h6 class="fw-bold mb-0"><i class="fa-regular fa-calendar-check text-primary me-2"></i>Today's Schedule</h6>
+    <a href="/doctor/appointments" class="btn btn-sm btn-outline-primary">View All</a>
+  </div>
+  <div class="card-body pt-2">
+    <% if (!todayList.length) { %>
+      <div class="empty-state">
+        <i class="fa-regular fa-calendar-xmark"></i>
+        <p class="mb-0">No appointments scheduled for today.</p>
+      </div>
+    <% } else { %>
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>Time</th><th>Patient</th><th>Contact</th><th>Reason</th><th>Status</th><th class="text-end">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% todayList.forEach(a => { %>
+              <tr>
+                <td class="fw-semibold"><%= a.timeSlot %></td>
+                <td>
+                  <div class="fw-semibold"><%= a.patientName %></div>
+                  <small class="text-muted"><%= a.patientEmail %></small>
+                </td>
+                <td class="small"><%= a.patientPhone || '—' %></td>
+                <td class="small text-muted"><%= a.reason || '—' %></td>
+                <td>
+                  <span class="badge rounded-pill bg-<%= a.status==='Completed'?'success':(a.status==='Cancelled'?'danger':'warning') %>-subtle text-<%= a.status==='Completed'?'success':(a.status==='Cancelled'?'danger':'warning') %>">
+                    <%= a.status %>
+                  </span>
+                </td>
+                <td class="text-end text-nowrap">
+                  <form action="/doctor/appointments/<%= a._id %>/toggle" method="POST" class="d-inline">
+                    <button class="btn btn-sm btn-outline-<%= a.status==='Completed'?'secondary':'success' %>"
+                            title="Toggle status">
+                      <i class="fa-solid <%= a.status==='Completed'?'fa-rotate-left':'fa-check' %>"></i>
+                    </button>
+                  </form>
+                  <a href="/doctor/prescriptions/new?appointment=<%= a._id %>" class="btn btn-sm btn-outline-primary" title="Prescribe">
+                    <i class="fa-solid fa-file-prescription"></i>
+                  </a>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    <% } %>
+  </div>
+</div>

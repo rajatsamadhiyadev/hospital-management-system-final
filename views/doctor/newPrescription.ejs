@@ -1,0 +1,78 @@
+<div class="row justify-content-center">
+  <div class="col-lg-9">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h4 class="fw-bold mb-0"><i class="fa-solid fa-file-prescription text-primary me-2"></i>Write Prescription</h4>
+      <a href="/doctor/prescriptions" class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-arrow-left me-1"></i>Back</a>
+    </div>
+
+    <form action="/doctor/prescriptions" method="POST">
+      <input type="hidden" name="appointmentId" value="<%= prefill.appointmentId %>">
+
+      <div class="card border-0 shadow-sm mb-3">
+        <div class="card-header bg-white border-0 pt-3">
+          <h6 class="fw-bold mb-0"><i class="fa-regular fa-user text-secondary me-2"></i>Patient Details</h6>
+        </div>
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label fw-semibold small">Patient Name *</label>
+              <input type="text" name="patientName" class="form-control" value="<%= prefill.name %>" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold small">Patient Email *</label>
+              <input type="email" name="patientEmail" class="form-control" value="<%= prefill.email %>" required>
+              <div class="form-text">The prescription appears in this patient's portal automatically.</div>
+            </div>
+            <div class="col-12">
+              <label class="form-label fw-semibold small">Diagnosis *</label>
+              <input type="text" name="diagnosis" class="form-control" placeholder="e.g. Acute viral pharyngitis" required>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card border-0 shadow-sm mb-3">
+        <div class="card-header bg-white border-0 pt-3 d-flex justify-content-between align-items-center">
+          <h6 class="fw-bold mb-0"><i class="fa-solid fa-pills text-secondary me-2"></i>Medicines</h6>
+          <button type="button" class="btn btn-sm btn-outline-primary" onclick="addMedicineRow()">
+            <i class="fa-solid fa-plus me-1"></i>Add Medicine
+          </button>
+        </div>
+        <div class="card-body">
+          <div id="medicineRows">
+            <div class="row g-2 mb-2 medicine-row">
+              <div class="col-md-4"><input type="text" name="medName" class="form-control" placeholder="Medicine name"></div>
+              <div class="col-md-2"><input type="text" name="medDosage" class="form-control" placeholder="500mg"></div>
+              <div class="col-md-3"><input type="text" name="medFrequency" class="form-control" placeholder="1-0-1 after food"></div>
+              <div class="col-md-2"><input type="text" name="medDuration" class="form-control" placeholder="5 days"></div>
+              <div class="col-md-1 d-grid">
+                <button type="button" class="btn btn-outline-danger" onclick="removeMedicineRow(this)"><i class="fa-solid fa-trash"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card border-0 shadow-sm mb-3">
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-md-8">
+              <label class="form-label fw-semibold small">Advice / Notes</label>
+              <textarea name="advice" class="form-control" rows="3" placeholder="Rest, plenty of fluids, avoid cold drinks..."></textarea>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label fw-semibold small">Follow-up Date</label>
+              <input type="date" name="followUpDate" class="form-control">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary fw-semibold px-4">
+        <i class="fa-solid fa-paper-plane me-2"></i>Issue Prescription
+      </button>
+    </form>
+
+  </div>
+</div>
