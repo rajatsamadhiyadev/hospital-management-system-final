@@ -1,0 +1,30 @@
+# ---- Dependencies ----
+node_modules/
+package-lock.json.bak
+
+# ---- Environment / secrets ----
+# NEVER commit .env — it holds your MongoDB Atlas password
+.env
+.env.local
+.env.*.local
+
+# ---- Logs ----
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+logs/
+
+# ---- Runtime / cache ----
+.cache/
+.npm/
+coverage/
+*.pid
+*.seed
+
+# ---- Editor / OS ----
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
