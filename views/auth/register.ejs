@@ -1,0 +1,75 @@
+<div class="row justify-content-center">
+  <div class="col-lg-7">
+    <div class="card border-0 shadow-sm">
+      <div class="card-body p-4 p-lg-5">
+
+        <div class="text-center mb-4">
+          <div class="role-icon bg-info-subtle text-info mx-auto"><i class="fa-solid fa-user-plus"></i></div>
+          <h4 class="fw-bold mt-3 mb-1">Patient Registration</h4>
+          <p class="text-muted small mb-0">Create an account to book visits and view your records</p>
+        </div>
+
+        <form action="/register" method="POST">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label fw-semibold small">Full Name *</label>
+              <input type="text" name="name" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold small">Email Address *</label>
+              <input type="email" name="email" class="form-control" required>
+              <div class="form-text">Records filed under this email link to you automatically.</div>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold small">Password *</label>
+              <input type="password" name="password" class="form-control" minlength="6" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold small">Confirm Password *</label>
+              <input type="password" name="confirmPassword" class="form-control" minlength="6" required>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold small">Phone</label>
+              <input type="text" name="phone" class="form-control">
+            </div>
+            <div class="col-md-3">
+              <label class="form-label fw-semibold small">Age</label>
+              <input type="number" name="age" class="form-control" min="0" max="130">
+            </div>
+            <div class="col-md-3">
+              <label class="form-label fw-semibold small">Gender</label>
+              <select name="gender" class="form-select">
+                <option value="">--</option>
+                <option>Male</option><option>Female</option><option>Other</option>
+              </select>
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label fw-semibold small">Blood Group</label>
+              <select name="bloodGroup" class="form-select">
+                <option value="">--</option>
+                <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
+                <option>O+</option><option>O-</option><option>AB+</option><option>AB-</option>
+              </select>
+            </div>
+            <div class="col-md-8">
+              <label class="form-label fw-semibold small">Address</label>
+              <input type="text" name="address" class="form-control">
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100 fw-semibold py-2 mt-4">
+            <i class="fa-solid fa-user-plus me-2"></i>Create Account
+          </button>
+        </form>
+
+        <p class="text-center text-muted small mt-4 mb-0">
+          Already registered? <a href="/login" class="fw-semibold text-decoration-none">Sign in</a>
+        </p>
+
+      </div>
+    </div>
+  </div>
+</div>
