@@ -1,0 +1,40 @@
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+  <h4 class="fw-bold mb-0"><i class="fa-solid fa-user-doctor text-primary me-2"></i>Doctors</h4>
+  <a href="/reception/doctors/new" class="btn btn-primary"><i class="fa-solid fa-plus me-2"></i>Add Doctor</a>
+</div>
+
+<% if (!doctors.length) { %>
+  <div class="card border-0 shadow-sm"><div class="card-body">
+    <div class="empty-state">
+      <i class="fa-solid fa-user-doctor"></i>
+      <p class="mb-0">No doctors added yet.</p>
+    </div>
+  </div></div>
+<% } else { %>
+  <div class="row g-3">
+    <% doctors.forEach(d => { %>
+      <div class="col-md-6 col-xl-4">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body">
+            <div class="d-flex align-items-center mb-3">
+              <span class="avatar avatar-lg bg-primary"><%= d.doc.name.charAt(0).toUpperCase() %></span>
+              <div class="ms-3">
+                <h6 class="fw-bold mb-0">Dr. <%= d.doc.name %></h6>
+                <small class="text-muted"><%= d.doc.specialization || 'General Physician' %></small>
+              </div>
+            </div>
+            <ul class="list-unstyled small text-muted mb-3">
+              <li><i class="fa-regular fa-envelope me-2"></i><%= d.doc.email %></li>
+              <li><i class="fa-solid fa-phone me-2"></i><%= d.doc.phone || '—' %></li>
+              <li><i class="fa-solid fa-indian-rupee-sign me-2"></i>Consultation fee: <%= d.doc.fee || 0 %></li>
+            </ul>
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="badge bg-warning-subtle text-warning"><%= d.count %> pending</span>
+              <a href="/reception/appointments?q=" class="btn btn-sm btn-outline-primary">View Schedule</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+<% } %>

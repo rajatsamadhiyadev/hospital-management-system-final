@@ -1,0 +1,57 @@
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+  <h4 class="fw-bold mb-0"><i class="fa-solid fa-users text-primary me-2"></i>Registered Patients</h4>
+  <a href="/reception/patients/new" class="btn btn-primary"><i class="fa-solid fa-user-plus me-2"></i>Register Patient</a>
+</div>
+
+<div class="card border-0 shadow-sm mb-3">
+  <div class="card-body py-3">
+    <form action="/reception/patients" method="GET" class="input-group">
+      <span class="input-group-text bg-white"><i class="fa-solid fa-magnifying-glass"></i></span>
+      <input type="text" name="q" class="form-control" placeholder="Search by name, email or phone" value="<%= q %>">
+      <button class="btn btn-outline-primary">Search</button>
+    </form>
+  </div>
+</div>
+
+<div class="card border-0 shadow-sm">
+  <div class="card-body">
+    <% if (!patients.length) { %>
+      <div class="empty-state">
+        <i class="fa-solid fa-user-slash"></i>
+        <p class="mb-0">No patients found.</p>
+      </div>
+    <% } else { %>
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr><th>Patient</th><th>Contact</th><th>Age / Gender</th><th>Blood</th><th>Visits</th><th class="text-end">Action</th></tr>
+          </thead>
+          <tbody>
+            <% patients.forEach(row => { %>
+              <tr>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <span class="avatar avatar-dark me-2"><%= row.p.name.charAt(0).toUpperCase() %></span>
+                    <div>
+                      <div class="fw-semibold"><%= row.p.name %></div>
+                      <small class="text-muted"><%= row.p.email %></small>
+                    </div>
+                  </div>
+                </td>
+                <td class="small"><%= row.p.phone || '—' %></td>
+                <td class="small"><%= row.p.age || '—' %> / <%= row.p.gender || '—' %></td>
+                <td><span class="badge bg-danger-subtle text-danger"><%= row.p.bloodGroup || '—' %></span></td>
+                <td><span class="badge bg-primary-subtle text-primary"><%= row.visits %></span></td>
+                <td class="text-end">
+                  <a href="/reception/appointments?q=<%= encodeURIComponent(row.p.email) %>" class="btn btn-sm btn-outline-primary">
+                    <i class="fa-regular fa-calendar me-1"></i>History
+                  </a>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    <% } %>
+  </div>
+</div>
