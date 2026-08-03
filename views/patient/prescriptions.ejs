@@ -1,0 +1,47 @@
+<h4 class="fw-bold mb-4"><i class="fa-solid fa-file-prescription text-primary me-2"></i>My Prescriptions</h4>
+
+<% if (!prescriptions.length) { %>
+  <div class="card border-0 shadow-sm"><div class="card-body">
+    <div class="empty-state">
+      <i class="fa-regular fa-file-lines"></i>
+      <p class="mb-0">No prescriptions on file yet.</p>
+    </div>
+  </div></div>
+<% } else { %>
+  <div class="row g-3">
+    <% prescriptions.forEach(p => { %>
+      <div class="col-md-6 col-xl-4">
+        <div class="card border-0 shadow-sm h-100 rx-card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+              <span class="badge bg-primary-subtle text-primary">
+                <i class="fa-regular fa-calendar me-1"></i><%= p.createdAt.toDateString() %>
+              </span>
+              <span class="rx-symbol">℞</span>
+            </div>
+
+            <h6 class="fw-bold mb-1"><%= p.diagnosis %></h6>
+            <p class="small text-muted mb-3">
+              Dr. <%= p.doctor ? p.doctor.name : '—' %>
+              <%= p.doctor && p.doctor.specialization ? ' · ' + p.doctor.specialization : '' %>
+            </p>
+
+            <div class="small mb-3">
+              <i class="fa-solid fa-pills text-info me-1"></i>
+              <%= p.medicines.length %> medicine(s)
+              <% if (p.followUpDate) { %>
+                <span class="d-block mt-1 text-warning">
+                  <i class="fa-regular fa-clock me-1"></i>Follow-up: <%= p.followUpDate.toDateString() %>
+                </span>
+              <% } %>
+            </div>
+
+            <a href="/patient/prescriptions/<%= p._id %>" class="btn btn-sm btn-outline-primary w-100">
+              <i class="fa-regular fa-eye me-1"></i>View Full Prescription
+            </a>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+<% } %>

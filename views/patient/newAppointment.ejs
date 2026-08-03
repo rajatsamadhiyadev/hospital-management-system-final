@@ -1,0 +1,59 @@
+<div class="row justify-content-center">
+  <div class="col-lg-7">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h4 class="fw-bold mb-0"><i class="fa-solid fa-calendar-plus text-primary me-2"></i>Book an Appointment</h4>
+      <a href="/patient/appointments" class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-arrow-left me-1"></i>Back</a>
+    </div>
+
+    <div class="card border-0 shadow-sm">
+      <div class="card-body p-4">
+        <% if (!doctors.length) { %>
+          <div class="alert alert-warning mb-0">
+            <i class="fa-solid fa-triangle-exclamation me-2"></i>
+            No doctors are available right now. Please contact reception.
+          </div>
+        <% } else { %>
+          <form action="/patient/appointments" method="POST">
+            <div class="row g-3">
+              <div class="col-12">
+                <label class="form-label fw-semibold small">Choose Doctor *</label>
+                <select name="doctor" class="form-select" required>
+                  <option value="">-- Select a doctor --</option>
+                  <% doctors.forEach(d => { %>
+                    <option value="<%= d._id %>">
+                      Dr. <%= d.name %><%= d.specialization ? ' — ' + d.specialization : '' %><%= d.fee ? ' (₹' + d.fee + ')' : '' %>
+                    </option>
+                  <% }) %>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold small">Preferred Date *</label>
+                <input type="date" name="date" class="form-control" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold small">Time Slot *</label>
+                <select name="timeSlot" class="form-select" required>
+                  <option value="">-- Select a slot --</option>
+                  <% ['09:00 AM','09:30 AM','10:00 AM','10:30 AM','11:00 AM','11:30 AM','12:00 PM',
+                      '02:00 PM','02:30 PM','03:00 PM','03:30 PM','04:00 PM','04:30 PM','05:00 PM'].forEach(t => { %>
+                    <option><%= t %></option>
+                  <% }) %>
+                </select>
+              </div>
+              <div class="col-12">
+                <label class="form-label fw-semibold small">Reason for Visit</label>
+                <textarea name="reason" class="form-control" rows="3" placeholder="Describe your symptoms briefly..."></textarea>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary fw-semibold px-4 mt-4">
+              <i class="fa-solid fa-check me-2"></i>Request Appointment
+            </button>
+          </form>
+        <% } %>
+      </div>
+    </div>
+
+  </div>
+</div>

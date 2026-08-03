@@ -1,0 +1,98 @@
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+  <div>
+    <h4 class="fw-bold mb-1">Hello, <%= currentUser.name %> <i class="fa-solid fa-hand-sparkles text-warning ms-1"></i></h4>
+    <p class="text-muted mb-0 small">Here is your health summary</p>
+  </div>
+  <a href="/patient/appointments/new" class="btn btn-primary"><i class="fa-solid fa-calendar-plus me-2"></i>Book Appointment</a>
+</div>
+
+<div class="row g-3 mb-4">
+  <%- include('../partials/statCard', { color:'primary', icon:'fa-regular fa-calendar-days',  value: stats.upcoming, label:'Upcoming Visits' }) %>
+  <%- include('../partials/statCard', { color:'success', icon:'fa-solid fa-circle-check',     value: stats.past,     label:'Completed Visits' }) %>
+  <%- include('../partials/statCard', { color:'info',    icon:'fa-solid fa-file-prescription',value: stats.scripts,  label:'Prescriptions' }) %>
+  <%- include('../partials/statCard', { color:'warning', icon:'fa-solid fa-heart-pulse',      value: stats.upcoming + stats.past, label:'Total Records' }) %>
+</div>
+
+<div class="row g-3">
+  <div class="col-lg-5">
+    <div class="card border-0 shadow-sm h-100">
+      <div class="card-header bg-white border-0 pt-3">
+        <h6 class="fw-bold mb-0"><i class="fa-regular fa-bell text-primary me-2"></i>Next Appointment</h6>
+      </div>
+      <div class="card-body">
+        <% if (!nextAppt) { %>
+          <div class="empty-state py-4">
+            <i class="fa-regular fa-calendar-xmark"></i>
+            <p class="mb-2">No upcoming appointments.</p>
+            <a href="/patient/appointments/new" class="btn btn-sm btn-primary">Book one now</a>
+          </div>
+        <% } else { %>
+          <div class="next-appt p-3 rounded-3">
+            <div class="d-flex align-items-center mb-3">
+              <span class="avatar avatar-lg bg-primary"><i class="fa-solid fa-user-doctor"></i></span>
+              <div class="ms-3">
+                <div class="fw-bold">Dr. <%= nextAppt.doctor ? nextAppt.doctor.name : '—' %></div>
+                <small class="text-muted"><%= nextAppt.doctor && nextAppt.doctor.specialization ? nextAppt.doctor.specialization : 'General Physician' %></small>
+              </div>
+            </div>
+            <div class="row g-2 small">
+              <div class="col-6">
+                <div class="text-muted text-uppercase fw-semibold" style="font-size:.7rem">Date</div>
+                <div class="fw-semibold"><%= nextAppt.date.toDateString() %></div>
+              </div>
+              <div class="col-6">
+                <div class="text-muted text-uppercase fw-semibold" style="font-size:.7rem">Time</div>
+                <div class="fw-semibold"><%= nextAppt.timeSlot %></div>
+              </div>
+              <% if (nextAppt.reason) { %>
+                <div class="col-12 mt-2">
+                  <div class="text-muted text-uppercase fw-semibold" style="font-size:.7rem">Reason</div>
+                  <div><%= nextAppt.reason %></div>
+                </div>
+              <% } %>
+            </div>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-7">
+    <div class="card border-0 shadow-sm h-100">
+      <div class="card-header bg-white border-0 pt-3 d-flex justify-content-between align-items-center">
+        <h6 class="fw-bold mb-0"><i class="fa-solid fa-clock-rotate-left text-primary me-2"></i>Recent Activity</h6>
+        <a href="/patient/appointments" class="btn btn-sm btn-outline-primary">View All</a>
+      </div>
+      <div class="card-body pt-2">
+        <% if (!recent.length) { %>
+          <div class="empty-state py-4">
+            <i class="fa-regular fa-folder-open"></i>
+            <p class="mb-0">No medical records yet.</p>
+          </div>
+        <% } else { %>
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead class="table-light">
+                <tr><th>Doctor</th><th>Date</th><th>Time</th><th>Status</th></tr>
+              </thead>
+              <tbody>
+                <% recent.forEach(a => { %>
+                  <tr>
+                    <td class="small fw-semibold">Dr. <%= a.doctor ? a.doctor.name : '—' %></td>
+                    <td class="small"><%= a.date.toDateString() %></td>
+                    <td class="small"><%= a.timeSlot %></td>
+                    <td>
+                      <span class="badge rounded-pill bg-<%= a.status==='Completed'?'success':(a.status==='Cancelled'?'danger':'warning') %>-subtle text-<%= a.status==='Completed'?'success':(a.status==='Cancelled'?'danger':'warning') %>">
+                        <%= a.status %>
+                      </span>
+                    </td>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
